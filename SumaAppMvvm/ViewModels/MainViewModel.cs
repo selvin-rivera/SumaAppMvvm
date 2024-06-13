@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using SumaAppMvvm.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,50 +12,26 @@ using System.Windows.Input;
 
 namespace SumaAppMvvm.ViewModels
 {
-    public class MainViewModel: INotifyPropertyChanged
+    public partial class MainViewModel : ObservableObject
     {
-        private string _value1;
-        private string _value2;
-        private string _result;
+        [ObservableProperty]
+        private string? value1;
 
-        public string Value1
-        {
-            get => _value1;
-            set
-            {
-                _value1 = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string? value2;
 
-        public string Value2
-        {
-            get => _value2;
-            set
-            {
-                _value2 = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private string? result;
 
-        public string Result
+        public MainViewModel()
         {
-            get => _result;
-            set
-            {
-                _result = value;
-                OnPropertyChanged();
-            }
+            SumCommand = new RelayCommand(OnSum);
+            ClearCommand = new RelayCommand(OnClear);
         }
 
         public ICommand SumCommand { get; }
         public ICommand ClearCommand { get; }
 
-        public MainViewModel()
-        {
-            SumCommand = new Command(OnSum);
-            ClearCommand = new Command(OnClear);
-        }
 
         private void OnSum()
         {
@@ -71,13 +50,6 @@ namespace SumaAppMvvm.ViewModels
             Value1 = string.Empty;
             Value2 = string.Empty;
             Result = string.Empty;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -6,7 +6,7 @@
         {
             InitializeComponent(); 
 
-            MainPage = new NavigationPage(new SumaAppMvvm.Views.MainPage()); 
+            MainPage = new NavigationPage(new Views.MainPage()); 
         }
     }
 }
